@@ -18,6 +18,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "BillRecovery.sqlite";
 
     public static final String TABLE_USER_DETAILS = "table_userdetails";
+    public static final String TABLE_GENERATE_BILL = "table_generatebill";
 //    public static final String SYNC_LOG = "SYNC_LOG";
 //    public static final String TABLE_ATTENDANCE = "attendance";
 //    public static final String TABLE_MASTERSYNC = "table_master_sync";

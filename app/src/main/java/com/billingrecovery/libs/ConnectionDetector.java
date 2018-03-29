@@ -1,9 +1,16 @@
 package com.billingrecovery.libs;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.billingrecovery.R;
 
 public class ConnectionDetector {
  
@@ -36,4 +43,5 @@ public class ConnectionDetector {
     public void displayMessage(String message) {
         Toast.makeText(_context, message, Toast.LENGTH_SHORT).show();
     }
+
 }

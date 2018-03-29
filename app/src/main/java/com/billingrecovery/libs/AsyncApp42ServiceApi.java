@@ -35,7 +35,7 @@ public class AsyncApp42ServiceApi {
     private static String apiSecret = "";
     private UserService userService;
     private StorageService storageService;
-    //private UploadService uploadService;
+    private UploadService uploadService;
     private EmailService emailService;
     //private PushNotificationService pushNotificationService;
 
@@ -56,7 +56,7 @@ public class AsyncApp42ServiceApi {
 
         this.userService = App42API.buildUserService();
         this.storageService = App42API.buildStorageService();
-        //this.uploadService = App42API.buildUploadService();
+        this.uploadService = App42API.buildUploadService();
         //this.pushNotificationService = App42API.buildPushNotificationService();
         this.emailService = App42API.buildEmailService();
     }
@@ -789,7 +789,7 @@ public class AsyncApp42ServiceApi {
     /*
      * This function Uploads File On App42 Cloud.
 	 */
-   /* public void uploadImageForUser(final String name, final String userName,
+    public void uploadImageForUser(final String name, final String userName,
                                    final String filePath, final UploadFileType fileType, final String description, final App42CallBack callBack) {
         final Handler callerThreadHandler = new Handler();
         new Thread() {
@@ -815,12 +815,12 @@ public class AsyncApp42ServiceApi {
                 }
             }
         }.start();
-    }*/
+    }
 
     /*
      * This function Uploads File On App42 Cloud.
      */
-   /* public void removeImageByUser(final String fileName, final String userName,
+    public void removeImageByUser(final String fileName, final String userName,
                                   final App42CallBack callBack) {
         final Handler callerThreadHandler = new Handler();
         new Thread() {
@@ -847,7 +847,7 @@ public class AsyncApp42ServiceApi {
                 }
             }
         }.start();
-    }*/
+    }
 
     /*public void removeImageByUserService(final String fileName, final String userName,
                                          final App42CallBack callBack) {

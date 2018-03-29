@@ -27,8 +27,11 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.0.1'
     compile 'com.android.support:design:26.0.1'
     compile 'com.android.support:support-v4:26.0.1'
+    compile 'com.android.support:cardview-v7:26.0.1'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.intuit.sdp:sdp-android:1.0.3'
     compile files('libs/App42_ANDROID_SDK_3.9.2.jar')
+    compile "com.squareup.picasso:picasso:2.4.0"
+    compile 'com.github.szugyi:Android-CircleMenu:2.0.0'
 }

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/black">
+
+    <TextView
+        android:id="@+id/tvDept"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:background="@drawable/table_row_item"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Name"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvDocno"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/table_row_item"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Doc No"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvCreatedby"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6"
+        android:background="@drawable/table_row_item"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Bill No"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvCreateddt"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="@drawable/table_row_item"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Total Amt"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvyear"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="@drawable/table_row_item"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Paid Amt"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvquter"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="@drawable/table_row_item"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Remain Amt"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvmonth"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="@drawable/table_row_item"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="ImageURL"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvstatus"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.4"
+        android:background="@drawable/table_row_item"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Created dt"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvs1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Updated dt"
+        android:background="@drawable/table_row_item"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        />
+
+
+    <TextView
+        android:id="@+id/tvs2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Action"
+        android:background="@drawable/table_row_item"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        />
+
+
+
+</LinearLayout>

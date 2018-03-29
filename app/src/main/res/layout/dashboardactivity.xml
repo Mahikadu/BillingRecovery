@@ -21,7 +21,7 @@
             android:layout_weight="1"
             android:weightSum="2"
             android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:layout_margin="@dimen/_10sdp">
 
             <ImageView
                 android:id="@+id/generatebill"
@@ -29,14 +29,14 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/generate_bill"
                 android:layout_weight="1"
-                android:layout_margin="25dp" />
+                android:layout_margin="@dimen/_25sdp" />
 
             <ImageView
                 android:id="@+id/updatebill"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/update_bill"
-                android:layout_margin="25dp"
+                android:layout_margin="@dimen/_25sdp"
                 android:layout_weight="1"/>
 
 
@@ -49,14 +49,14 @@
             android:layout_weight="1"
             android:weightSum="2"
             android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:layout_margin="@dimen/_10sdp">
 
             <ImageView
                 android:id="@+id/report"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/bills_report"
-                android:layout_margin="25dp"
+                android:layout_margin="@dimen/_25sdp"
                 android:layout_weight="1"/>
 
             <ImageView
@@ -64,7 +64,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/cust_report"
-                android:layout_margin="25dp"
+                android:layout_margin="@dimen/_25sdp"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -76,14 +76,14 @@
             android:weightSum="2"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:layout_margin="@dimen/_10sdp">
 
             <ImageView
                 android:id="@+id/aboutus"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/about_us"
-                android:layout_margin="25dp"
+                android:layout_margin="@dimen/_25sdp"
                 android:layout_weight="1"/>
 
 

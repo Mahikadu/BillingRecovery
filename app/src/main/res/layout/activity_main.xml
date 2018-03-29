@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:android.support.design="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#80CBC4"
+    android:background="@drawable/animation_list"
     android:gravity="center"
     >
 
     <TextView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/_80sdp"
         android:layout_alignParentTop="true"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:padding="20dp"
+        android:padding="@dimen/_20sdp"
         android:text="Billing Recovery"
         android:textColor="#000000"
         android:textSize="25sp"
@@ -28,10 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="#CE93D8"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="@dimen/_20sdp">
 
         <TextView
             android:id="@+id/textView2"
@@ -39,9 +39,10 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/login_layout"
             android:layout_gravity="center"
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/_20sdp"
             android:gravity="center"
             android:text="Login"
+            android:textColor="#000000"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="normal"
             android:visibility="visible"
@@ -55,50 +56,39 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:background="#CE93D8"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="@dimen/_20sdp">
 
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:text="Username"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:visibility="gone" />
 
             <android.support.design.widget.TextInputLayout
 
                 android:id="@+id/application_no"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="@dimen/_55sdp"
                 android.support.design:hintTextAppearance="@style/TextInputLayout">
 
                 <EditText
                     android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:ems="10"
                     android:gravity="start|center_vertical"
                     android:hint="Username"
                     android:inputType="text"
                     android:maxLines="1"
-                    android:paddingEnd="10dp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:longClickable="false"
                     android:descendantFocusability="beforeDescendants"
                     android:text=""
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingStart="10dp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:textColor="#000000"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -106,29 +96,19 @@
             </android.support.design.widget.TextInputLayout>
 
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:text="Password"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:visibility="gone" />
-
             <android.support.design.widget.TextInputLayout
 
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="@dimen/_55sdp"
                 android.support.design:hintTextAppearance="@style/TextInputLayout">
 
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:ems="10"
                     android:gravity="start|center_vertical"
                     android:hint="Password"
@@ -139,10 +119,10 @@
                     android:longClickable="false"
                     android:descendantFocusability="beforeDescendants"
                     android:text=""
-                    android:paddingEnd="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingStart="10dp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:textColor="#000000"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -154,13 +134,13 @@
 
         <Button
             android:id="@+id/loginButton"
-            android:layout_width="180dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:background="@drawable/ripple_login"
-            android:padding="5dp"
+            android:padding="@dimen/_5sdp"
             android:text="Login"
             android:textColor="#ffffff"
             android:textStyle="bold" />
@@ -180,8 +160,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="bottom|center"
-            android:padding="5dp"
-            android:text="Copyright (c) 2017. All right reserved"
+            android:padding="@dimen/_5sdp"
+            android:text="Copyright (c) 2018. All right reserved"
             android:textColor="#000000"
             android:textSize="12sp" />
 

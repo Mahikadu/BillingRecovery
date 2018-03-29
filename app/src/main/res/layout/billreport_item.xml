@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="900dp"
+    android:layout_height="@dimen/_40sdp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:id="@+id/tr_stock_report"
+        android:layout_width="900dp"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TableRow
+            android:id="@+id/tr_label_stock"
+            android:layout_width="900dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/txtname"
+                style="@style/report_textview"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:background="@layout/tableborder_for_fields"
+                android:gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:text="Name"
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/txtdocno"
+                style="@style/report_textview"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:background="@layout/tableborder_for_fields"
+                android:gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:text="Doc No"
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/txtbill"
+                style="@style/report_textview"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:background="@layout/tableborder_for_fields"
+                android:gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:text="Bill No"
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/txttotal"
+                style="@style/report_textview"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:background="@layout/tableborder_for_fields"
+                android:gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:text="Total Amt"
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/txtpaid"
+                style="@style/report_textview"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@layout/tableborder_for_fields"
+                android:gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:text="Paid Amt"
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/txtremain"
+                style="@style/report_textview"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@layout/tableborder_for_fields"
+                android:gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:text="Remaining Amt"
+                android:textSize="11sp"/>
+
+            <!-- <TextView
+                 android:id="@+id/txtimage"
+                 style="@style/report_textview"
+                 android:layout_width="100dp"
+                 android:padding="@dimen/_5sdp"
+                 android:layout_height="match_parent"
+                 android:background="@layout/tableborder_for_fields"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                 android:text="Image Url" />-->
+
+            <TextView
+                android:id="@+id/txtcreatedate"
+                style="@style/report_textview"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@layout/tableborder_for_fields"
+                android:gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:text="Created Date"
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/txtupdatedate"
+                style="@style/report_textview"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@layout/tableborder_for_fields"
+                android:gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:text="Updated Date"
+                android:textSize="11sp"/>
+
+            <LinearLayout
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txtview"
+                    style="@style/report_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@layout/tableborder_for_fields"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="View"
+                    android:textSize="11sp"/>
+
+                <TextView
+                    android:id="@+id/txtupdate"
+                    style="@style/report_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@layout/tableborder_for_fields"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="Update"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

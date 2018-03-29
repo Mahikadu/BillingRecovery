@@ -16,6 +16,7 @@ public class Config {
 
 
     public static final String collectionAdmin = "Admin";
+    public static final String collectionGenerateBill = "GenerateBill";
 
     public static final String collectionService = "service";
     /* public static final String collectionServiceHistory = "servicehistory";
