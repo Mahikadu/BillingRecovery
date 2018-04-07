@@ -34,8 +34,6 @@ import com.billingrecovery.libs.Config;
 import com.billingrecovery.libs.ConnectionDetector;
 import com.billingrecovery.libs.SharedPref;
 import com.billingrecovery.libs.Utils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
 import com.shephertz.app42.paas.sdk.android.App42Exception;
 import com.shephertz.app42.paas.sdk.android.storage.Storage;
