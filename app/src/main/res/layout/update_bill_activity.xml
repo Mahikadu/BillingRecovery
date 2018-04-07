@@ -13,9 +13,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/btnsubmit"
         android:layout_below="@+id/headertitle"
-        android:orientation="vertical"
-        android:layout_above="@+id/submitbtn">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -40,16 +40,18 @@
                     android.support.design:hintTextAppearance="@style/TextInputLayout">
 
                     <EditText
-                        android:id="@+id/cust_name"
+                        android:id="@+id/edtcust_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:clickable="false"
                         android:descendantFocusability="beforeDescendants"
+                        android:editable="false"
                         android:ems="10"
+                        android:maxLength="20"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         android:gravity="start|center_vertical"
                         android:hint="Name"
-                        android:maxLength="20"
                         android:inputType="text"
                         android:longClickable="false"
                         android:maxLines="1"
@@ -75,17 +77,19 @@
                     android.support.design:hintTextAppearance="@style/TextInputLayout">
 
                     <EditText
-                        android:id="@+id/bill_no"
+                        android:id="@+id/edtbill_no"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:clickable="false"
                         android:descendantFocusability="beforeDescendants"
+                        android:editable="false"
                         android:ems="10"
+                        android:maxLength="10"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         android:gravity="start|center_vertical"
                         android:hint="Bill Number"
                         android:inputType="number"
-                        android:maxLength="10"
                         android:longClickable="false"
                         android:maxLines="1"
                         android:paddingEnd="@dimen/_10sdp"
@@ -111,7 +115,7 @@
                     android.support.design:hintTextAppearance="@style/TextInputLayout">
 
                     <EditText
-                        android:id="@+id/edt_date"
+                        android:id="@+id/edt_date1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:descendantFocusability="beforeDescendants"
@@ -146,16 +150,18 @@
                     android.support.design:hintTextAppearance="@style/TextInputLayout">
 
                     <EditText
-                        android:id="@+id/total_amount"
+                        android:id="@+id/edttotal_amount"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:clickable="false"
                         android:descendantFocusability="beforeDescendants"
+                        android:editable="false"
                         android:ems="10"
+                        android:maxLength="10"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         android:gravity="start|center_vertical"
                         android:hint="Amount"
-                        android:maxLength="10"
                         android:inputType="number"
                         android:longClickable="false"
                         android:maxLines="1"
@@ -171,40 +177,86 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android.support.design:hintTextAppearance="@style/TextInputLayout">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                    <EditText
-                        android:id="@+id/paid_amount"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:descendantFocusability="beforeDescendants"
-                        android:ems="10"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:gravity="start|center_vertical"
-                        android:hint="Paid"
-                        android:maxLength="10"
-                        android:inputType="number"
-                        android:longClickable="false"
-                        android:maxLines="1"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:paddingLeft="@dimen/_10sdp"
-                        android:paddingRight="@dimen/_10sdp"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:text=""
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android.support.design:hintTextAppearance="@style/TextInputLayout">
+
+                        <EditText
+                            android:id="@+id/edtpaid_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:descendantFocusability="beforeDescendants"
+                            android:editable="false"
+                            android:ems="10"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:gravity="start|center_vertical"
+                            android:hint="Paid"
+                            android:maxLength="10"
+                            android:inputType="number"
+                            android:longClickable="false"
+                            android:maxLines="1"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:paddingRight="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:text=""
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
 
-                </android.support.design.widget.TextInputLayout>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android.support.design:hintTextAppearance="@style/TextInputLayout">
+
+                        <EditText
+                            android:id="@+id/edtrepaid_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:descendantFocusability="beforeDescendants"
+                            android:ems="10"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:gravity="start|center_vertical"
+                            android:hint="Re-Paid"
+                            android:maxLength="10"
+                            android:inputType="number"
+                            android:longClickable="false"
+                            android:maxLines="1"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:paddingRight="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:text=""
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -216,17 +268,17 @@
                     android.support.design:hintTextAppearance="@style/TextInputLayout">
 
                     <EditText
-                        android:id="@+id/remain_amount"
+                        android:id="@+id/edtremain_amount"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:descendantFocusability="beforeDescendants"
                         android:editable="false"
                         android:ems="10"
-                        android:maxLength="10"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         android:gravity="start|center_vertical"
                         android:hint="Remaining Amt"
+                        android:maxLength="10"
                         android:inputType="none"
                         android:longClickable="false"
                         android:maxLines="1"
@@ -243,7 +295,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <Button
-                    android:id="@+id/camerabtn"
+                    android:id="@+id/btncamera"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_alignParentBottom="true"
@@ -256,13 +308,14 @@
 
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/imgupdate"
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_3sdp" />
+
 
             </LinearLayout>
 
@@ -271,7 +324,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/submitbtn"
+        android:id="@+id/btnsubmit"
         android:layout_width="@dimen/_120sdp"
         android:layout_height="@dimen/_35sdp"
         android:layout_alignParentBottom="true"
@@ -281,7 +334,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:background="@drawable/ripple_login"
         android:padding="@dimen/_5sdp"
-        android:text="Submit"
+        android:text="Update"
         android:textColor="#ffffff"
         android:textStyle="bold" />
 

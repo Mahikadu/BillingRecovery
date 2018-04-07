@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:circle="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.szugyi.circlemenu.view.CircleImageView
+        android:id="@+id/generatebill_image"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:elevation="2dp"
+        android:src="@drawable/generate_bill"
+        />
+
+    <com.szugyi.circlemenu.view.CircleImageView
+        android:id="@+id/updatebill_image"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:elevation="2dp"
+        android:src="@drawable/update_bill"
+        />
+
+
+    <com.szugyi.circlemenu.view.CircleImageView
+        android:id="@+id/billsreport_image"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:elevation="2dp"
+        android:src="@drawable/bills_report"
+        />
+
+    <com.szugyi.circlemenu.view.CircleImageView
+        android:id="@+id/custreport_image"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:src="@drawable/cust_report"
+       />
+
+    <com.szugyi.circlemenu.view.CircleImageView
+        android:id="@+id/aboutus_image"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:elevation="2dp"
+        android:src="@drawable/about_us"
+        />
+
+
+</merge>

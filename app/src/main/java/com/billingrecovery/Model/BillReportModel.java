@@ -1,10 +1,12 @@
 package com.billingrecovery.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by Mahesh on 3/29/2018.
  */
 
-public class BillReportModel {
+public class BillReportModel implements Serializable{
 
     String doc_id;
     String total_amount;

@@ -7,7 +7,7 @@
     <include layout="@layout/all_layoutheader" />
 
     <HorizontalScrollView
-        android:id="@+id/horizantal_scrollview_stock_report"
+        android:id="@+id/horizantal_scrollview_customer_report"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none">
@@ -115,7 +115,7 @@
             </TableRow>
 
             <ListView
-                android:id="@+id/billreport_list"
+                android:id="@+id/remaincustreport_list"
                 android:layout_width="900dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_2sdp"

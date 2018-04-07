@@ -32,6 +32,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.intuit.sdp:sdp-android:1.0.3'
     compile files('libs/App42_ANDROID_SDK_3.9.2.jar')
-    compile "com.squareup.picasso:picasso:2.4.0"
-    compile 'com.github.szugyi:Android-CircleMenu:2.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

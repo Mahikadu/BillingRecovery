@@ -3,6 +3,7 @@ package com.billingrecovery.Adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.billingrecovery.Activity.BillReportsActivity;
@@ -69,8 +71,7 @@ public class BillReportAdapter extends BaseAdapter {
 
             convertView = mInflater.inflate(R.layout.billreport_item, null);
 
-
-
+            TableRow row = (TableRow) convertView.findViewById(R.id.tr_label_stock);
             TextView txtname = (TextView)convertView.findViewById(R.id.txtname);
             TextView txtdocno =(TextView)convertView.findViewById(R.id.txtdocno);
             TextView txtbillno =(TextView)convertView.findViewById(R.id.txtbill);
@@ -80,7 +81,6 @@ public class BillReportAdapter extends BaseAdapter {
             TextView txtcreatedate = (TextView)convertView.findViewById(R.id.txtcreatedate);
             TextView txtupdatedate = (TextView)convertView.findViewById(R.id.txtupdatedate);
             TextView txtview =(TextView)convertView.findViewById(R.id.txtview);
-            TextView txtupdate=(TextView)convertView.findViewById(R.id.txtupdate);
 
 
             billReportModel = billReportDetailsArraylist.get(position);
@@ -103,7 +103,6 @@ public class BillReportAdapter extends BaseAdapter {
             txtcreatedate.setText(billReportModel.getCreated_date());
             txtupdatedate.setText(billReportModel.getUpdated_date());
             txtview.setText("View");
-            txtupdate.setText("Update");
 
 
             txtview.setOnClickListener(new View.OnClickListener() {
@@ -117,13 +116,6 @@ public class BillReportAdapter extends BaseAdapter {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-                }
-            });
-
-            txtupdate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
                 }
             });
 
@@ -148,6 +140,7 @@ public class BillReportAdapter extends BaseAdapter {
         TextView text5 = (TextView) dialog.findViewById(R.id.str_remainingamt);
         TextView text6 = (TextView) dialog.findViewById(R.id.str_cretdate);
         TextView text7 = (TextView) dialog.findViewById(R.id.str_updatedate);
+        TextView close = (TextView) dialog.findViewById(R.id.done);
 
         text.setText(name);
         text1.setText(docno);
@@ -158,8 +151,8 @@ public class BillReportAdapter extends BaseAdapter {
         text6.setText(credate);
         text7.setText(updatedate);
 
-        Button dialogButton = (Button) dialog.findViewById(R.id.done);
-        dialogButton.setOnClickListener(new View.OnClickListener() {
+        //Button dialogButton = (Button) dialog.findViewById(R.id.done);
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

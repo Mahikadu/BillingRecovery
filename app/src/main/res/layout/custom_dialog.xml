@@ -8,17 +8,39 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp">
 
-        <TextView
-            android:id="@+id/adress_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:paddingTop="@dimen/_10sdp"
-            android:text="Customer Bill Details"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:id="@+id/adress_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:paddingTop="@dimen/_5sdp"
+                android:text="Customer Bill Details"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:id="@+id/done"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:paddingTop="@dimen/_5sdp"
+                android:text="X"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/_14sdp" />
+
+        </RelativeLayout>
 
 
         <LinearLayout
@@ -228,17 +250,17 @@
                 android:text="updated date" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/done"
-            android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/ripple_login"
-            android:padding="@dimen/_5sdp"
-            android:text="ok"
-            android:textColor="#ffffff" />
+        <!-- <Button
+             android:id="@+id/done"
+             android:layout_width="@dimen/_80sdp"
+             android:layout_height="@dimen/_30sdp"
+             android:layout_centerHorizontal="true"
+             android:layout_gravity="center"
+             android:layout_marginBottom="@dimen/_10sdp"
+             android:layout_marginTop="@dimen/_10sdp"
+             android:background="@drawable/ripple_login"
+             android:padding="@dimen/_5sdp"
+             android:text="Ok"
+             android:textColor="#ffffff" />-->
     </LinearLayout>
 </ScrollView>

@@ -62,7 +62,7 @@ public class BillReportsActivity extends Activity implements View.OnClickListene
 
     ProgressDialog mProgressDialog;
     HorizontalScrollView horizantalscrollviewforstock;
-    String total_amount,created_date,customer_name,strdate,remaining_amount,image_url,updated_date,bill_number,paid_amount,strstatus;
+    String total_amount, created_date, customer_name, strdate, remaining_amount, image_url, updated_date, bill_number, paid_amount, strstatus;
 
 
     @Override
@@ -111,6 +111,15 @@ public class BillReportsActivity extends Activity implements View.OnClickListene
 
         InsertBillReportInDB();
         ShowBillReport();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent home = new Intent(getApplicationContext(),
+                DashboardActivity.class);
+        startActivity(home);
     }
 
     @Override
@@ -224,10 +233,10 @@ public class BillReportsActivity extends Activity implements View.OnClickListene
                                                 bill_number = "";
                                             }
 
-                                            if(jsonObject.getString("image_url") != null &&
-                                                    !jsonObject.getString("image_url").equalsIgnoreCase("")){
+                                            if (jsonObject.getString("image_url") != null &&
+                                                    !jsonObject.getString("image_url").equalsIgnoreCase("")) {
                                                 image_url = jsonObject.optString("image_url");
-                                            }else{
+                                            } else {
                                                 image_url = "";
                                             }
 
@@ -255,14 +264,14 @@ public class BillReportsActivity extends Activity implements View.OnClickListene
                                     //total_amount,created_date,customer_name,strdate,remaining_amount,updated_date,bill_number,image_url,paid_amount
 
                                     String valuesArray[] = {jsonDocument.getDocId(),
-                                            customer_name,bill_number,strdate,total_amount,paid_amount,remaining_amount,
-                                            image_url,created_date,updated_date,
-                                            Config.collectionGenerateBill,strstatus};
+                                            customer_name, bill_number, strdate, total_amount, paid_amount, remaining_amount,
+                                            image_url, created_date, updated_date,
+                                            Config.collectionGenerateBill, strstatus};
                                     boolean output = BillingRecovery.dbCon.updateBulk(DbHelper.TABLE_GENERATE_BILL, selection, valuesArray, utils.columnNamesGenerateBill, selectionArgs);
                                     //cd.displayMessage("Data Upload Successfully!!");
                                 }
 
-                               // ShowBillReport();
+                                // ShowBillReport();
 
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -298,44 +307,44 @@ public class BillReportsActivity extends Activity implements View.OnClickListene
         }
     }
 
-    public void ShowBillReport(){
-            try {
+    public void ShowBillReport() {
+        try {
 
-                Cursor cursor = BillingRecovery.dbCon.fetchAlldata(DbHelper.TABLE_GENERATE_BILL);
+            Cursor cursor = BillingRecovery.dbCon.fetchAlldata(DbHelper.TABLE_GENERATE_BILL);
 
-                billReportDetailsArraylist = new ArrayList<>();
-                if (cursor != null && cursor.moveToFirst()) {
-                    cursor.moveToFirst();
-                    do {
-                        billReportModel = new BillReportModel();
-                        billReportModel.setDoc_id(cursor.getString(cursor.getColumnIndex("object_id")));
-                        billReportModel.setTotal_amount(cursor.getString(cursor.getColumnIndex("total_amount")));
-                        billReportModel.setCustomer_name(cursor.getString(cursor.getColumnIndex("customer_name")));
-                        billReportModel.setCreated_date(cursor.getString(cursor.getColumnIndex("created_date")));
-                        billReportModel.setStrdate(cursor.getString(cursor.getColumnIndex("strdate")));
-                        billReportModel.setRemaining_amount(cursor.getString(cursor.getColumnIndex("remaining_amount")));
-                        billReportModel.setUpdated_date(cursor.getString(cursor.getColumnIndex("updated_date")));
-                        billReportModel.setBill_number(cursor.getString(cursor.getColumnIndex("bill_number")));
-                        billReportModel.setPaid_amount(cursor.getString(cursor.getColumnIndex("paid_amount")));
-                        billReportModel.setStrstatus(cursor.getString(cursor.getColumnIndex("status")));
-                        billReportModel.setImgurl(cursor.getString(cursor.getColumnIndex("image_url")));
+            billReportDetailsArraylist = new ArrayList<>();
+            if (cursor != null && cursor.moveToFirst()) {
+                cursor.moveToFirst();
+                do {
+                    billReportModel = new BillReportModel();
+                    billReportModel.setDoc_id(cursor.getString(cursor.getColumnIndex("object_id")));
+                    billReportModel.setTotal_amount(cursor.getString(cursor.getColumnIndex("total_amount")));
+                    billReportModel.setCustomer_name(cursor.getString(cursor.getColumnIndex("customer_name")));
+                    billReportModel.setCreated_date(cursor.getString(cursor.getColumnIndex("created_date")));
+                    billReportModel.setStrdate(cursor.getString(cursor.getColumnIndex("strdate")));
+                    billReportModel.setRemaining_amount(cursor.getString(cursor.getColumnIndex("remaining_amount")));
+                    billReportModel.setUpdated_date(cursor.getString(cursor.getColumnIndex("updated_date")));
+                    billReportModel.setBill_number(cursor.getString(cursor.getColumnIndex("bill_number")));
+                    billReportModel.setPaid_amount(cursor.getString(cursor.getColumnIndex("paid_amount")));
+                    billReportModel.setStrstatus(cursor.getString(cursor.getColumnIndex("status")));
+                    billReportModel.setImgurl(cursor.getString(cursor.getColumnIndex("image_url")));
 
-                        billReportDetailsArraylist.add(billReportModel);
+                    billReportDetailsArraylist.add(billReportModel);
 
-                    } while (cursor.moveToNext());
+                } while (cursor.moveToNext());
 
-                }
-
-                adapter = new BillReportAdapter(context,activity, billReportDetailsArraylist);
-                stocklistview.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-
-            } catch (Exception e) {
-                // TODO: handle exception
-                e.printStackTrace();
             }
 
+            adapter = new BillReportAdapter(context, activity, billReportDetailsArraylist);
+            stocklistview.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
         }
+
+    }
 
 
 }

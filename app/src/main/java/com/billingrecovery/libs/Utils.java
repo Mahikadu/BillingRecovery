@@ -24,6 +24,8 @@ public class Utils {
             SimpleDateFormat("HH:mm dd MMM yyyy", locale);
     public final static SimpleDateFormat writeFormatDate = new
             SimpleDateFormat("dd-MMM-yyyy", locale);
+    public final static SimpleDateFormat simpleFormatDate = new
+            SimpleDateFormat("MM-dd-yyyy", locale);
     public final static SimpleDateFormat writeFormatDateDB = new
             SimpleDateFormat("yyyy-MM-dd", locale);
     public final static SimpleDateFormat writeFormatDateMonth = new

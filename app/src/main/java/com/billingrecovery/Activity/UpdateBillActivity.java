@@ -7,12 +7,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.billingrecovery.Dbconfig.DbHelper;
+import com.billingrecovery.Model.BillReportModel;
 import com.billingrecovery.R;
 import com.billingrecovery.app42services.StorageService;
 import com.billingrecovery.app42services.UploadService;
@@ -33,6 +34,8 @@ import com.billingrecovery.libs.Config;
 import com.billingrecovery.libs.ConnectionDetector;
 import com.billingrecovery.libs.SharedPref;
 import com.billingrecovery.libs.Utils;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
 import com.shephertz.app42.paas.sdk.android.App42Exception;
 import com.shephertz.app42.paas.sdk.android.storage.Storage;
@@ -46,27 +49,26 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 /**
- * Created by Mahesh on 12/19/2017.
+ * Created by Mahesh on 3/30/2018.
  */
 
-public class GenerateBillActivity extends Activity implements View.OnClickListener {
+public class UpdateBillActivity extends Activity implements View.OnClickListener {
 
     Button Logout, submitbtn, Home, camerabtn;
     TextView username;
     ImageView image;
 
-    EditText custname, billno, edt_date, totalamount, paidamount, remainamount;
+    EditText custname, billno, edt_date, totalamount, paidamount, remainamount, edtrepaid_amount;
 
     Context context;
     private SharedPref sharedPref;
@@ -74,26 +76,28 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
     private ConnectionDetector cd;
     DatePickerDialog datePickerDialog;
 
-    String customer, billnum, currentdate;
-
-    String strtotalamt, strpaidamt, strremainamt, strCustomerImageUrl, filePath, strImagename, strusername;
-    private final int requestCode = 20;
-    ProgressDialog mProgressDialog;
-    Uri outputFileUri;
     private static StorageService storageService;
     private static UploadService uploadService;
 
+    public BillReportModel billReportModel;
+
+    String customer, billnum, currentdate;
+    String strtotalamt, strpaidamt, strremainamt, strCustomerImageUrl,
+            filePath, strImagename, strusername, strrepaidamt,strstatus,strUpdatedDate;
+
+    private final int requestCode = 20;
+    ProgressDialog mProgressDialog;
+    Uri outputFileUri;
+    String imageurl;
+    boolean cameraClick = false;
     TextView headingtitle;
 
-    File file;
-
-    String total_amount, created_date, customer_name, strdate, remaining_amount, updated_date, bill_number, image_url, paid_amount, strstatus;
 
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.generate_bill_activity);
+        setContentView(R.layout.update_bill_activity);
 
         context = getApplicationContext();
 
@@ -105,25 +109,35 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
 
         Logout = (Button) findViewById(R.id.btn_logout1);
         Home = (Button) findViewById(R.id.btn_home1);
-        submitbtn = (Button) findViewById(R.id.submitbtn);
-        camerabtn = (Button) findViewById(R.id.camerabtn);
+        submitbtn = (Button) findViewById(R.id.btnsubmit);
+        camerabtn = (Button) findViewById(R.id.btncamera);
         headingtitle = (TextView) findViewById(R.id.imageView1);
-        headingtitle.setText("Generate Bill");
+        headingtitle.setText("Update Bill");
 
-        image = (ImageView) findViewById(R.id.imageView);
-
-
-        //username = (TextView) findViewById(R.id.tv_h_username);
         strusername = sharedPref.getuserName();
-        //username.setText(strusername);
 
-        custname = (EditText) findViewById(R.id.cust_name);
-        billno = (EditText) findViewById(R.id.bill_no);
-        totalamount = (EditText) findViewById(R.id.total_amount);
-        paidamount = (EditText) findViewById(R.id.paid_amount);
-        remainamount = (EditText) findViewById(R.id.remain_amount);
-        edt_date = (EditText) findViewById(R.id.edt_date);
+       /* ImageLoader imageLoader = ImageLoader.getInstance();
+        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                .cacheOnDisc(true).resetViewBeforeLoading(true)
+                .showImageForEmptyUri(fallback)
+                .showImageOnFail(fallback)
+                .showImageOnLoading(fallback).build();*/
 
+        image = (ImageView) findViewById(R.id.imgupdate);
+
+        custname = (EditText) findViewById(R.id.edtcust_name);
+        billno = (EditText) findViewById(R.id.edtbill_no);
+        totalamount = (EditText) findViewById(R.id.edttotal_amount);
+        paidamount = (EditText) findViewById(R.id.edtpaid_amount);
+        remainamount = (EditText) findViewById(R.id.edtremain_amount);
+        edt_date = (EditText) findViewById(R.id.edt_date1);
+        edtrepaid_amount = (EditText) findViewById(R.id.edtrepaid_amount);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            billReportModel = new BillReportModel();
+            billReportModel = (BillReportModel) getIntent().getSerializableExtra("en"); //Obtaining data
+        }
 
         Logout.setOnClickListener(this);
         Home.setOnClickListener(this);
@@ -132,35 +146,10 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
         camerabtn.setOnClickListener(this);
         image.setOnClickListener(this);
 
-        custname.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                custname.setFocusableInTouchMode(true);
-                return false;
-            }
-        });
-
-        billno.setOnTouchListener(new View.OnTouchListener() {
+        edtrepaid_amount.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                billno.setFocusableInTouchMode(true);
-                return false;
-            }
-        });
-
-        totalamount.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                totalamount.setFocusableInTouchMode(true);
-                remainamount.setText("");
-                return false;
-            }
-        });
-
-        paidamount.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                paidamount.setFocusableInTouchMode(true);
+                edtrepaid_amount.setFocusableInTouchMode(true);
                 remainamount.setText("");
                 return false;
             }
@@ -182,20 +171,25 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
                     if (hasfocus) {
                         strtotalamt = totalamount.getText().toString();
                         strpaidamt = paidamount.getText().toString();
+                        strrepaidamt = edtrepaid_amount.getText().toString();
                         int total = Integer.parseInt(strtotalamt);
                         int paid = Integer.parseInt(strpaidamt);
-                        if (total >= paid) {
+                        int repaid = Integer.parseInt(strrepaidamt);
+                        int finalpaidamt = paid + repaid;
+                        if (total >= finalpaidamt) {
                             if (strtotalamt != null && strpaidamt != null &&
                                     strtotalamt.length() > 0 && strpaidamt.length() > 0) {
 
-                                strremainamt = String.valueOf(total - paid);
+                                strpaidamt = String.valueOf(paid + repaid);
+                                strremainamt = String.valueOf(total - finalpaidamt);
 
                                 remainamount.setText(strremainamt);
 
                             }
                         } else {
                             //cd.displayMessage("Please put Paidamt same as Totalamt!!");
-                            paidamount.setError("Please put Paidamt same as Totalamt!!");
+                            edtrepaid_amount.setError("Not match");
+                            cd.displayMessage("Total amount not match to addition of paid + repaid amount");
                         }
                     } else {
                     }
@@ -205,7 +199,6 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
                 }
             }
         });
-
 
         final Calendar newCalendar = Calendar.getInstance();
         final DateFormat dateFormatter = new SimpleDateFormat("MM-dd-yyyy");
@@ -219,6 +212,34 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
             }
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.getDatePicker().setCalendarViewShown(false);
+
+
+        if (billReportModel != null) {
+            custname.setText(billReportModel.getCustomer_name());
+            billno.setText(billReportModel.getBill_number());
+            totalamount.setText(billReportModel.getTotal_amount());
+            paidamount.setText(billReportModel.getPaid_amount());
+            remainamount.setText(billReportModel.getRemaining_amount());
+            edt_date.setText(billReportModel.getStrdate());
+            imageurl = billReportModel.getImgurl();
+
+            //imageLoader.displayImage(imageurl, image, options);
+
+            try {
+                Picasso.with(this)
+                        .load(imageurl)
+                        .priority(HIGH)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .error(R.mipmap.ic_launcher)
+                        .noFade()
+                        .into(image);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        }
     }
 
     @Override
@@ -234,7 +255,7 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
         int id = view.getId();
         switch (id) {
             case R.id.btn_logout1:
-                view.startAnimation(AnimationUtils.loadAnimation(GenerateBillActivity.this, R.anim.button_click));
+                view.startAnimation(AnimationUtils.loadAnimation(UpdateBillActivity.this, R.anim.button_click));
                 Intent logout = new Intent(getApplicationContext(),
                         MainActivity.class);
                 logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -242,26 +263,27 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
                 break;
 
             case R.id.btn_home1:
-                view.startAnimation(AnimationUtils.loadAnimation(GenerateBillActivity.this, R.anim.button_click));
+                view.startAnimation(AnimationUtils.loadAnimation(UpdateBillActivity.this, R.anim.button_click));
                 Intent home = new Intent(getApplicationContext(),
                         DashboardActivity.class);
                 startActivity(home);
                 break;
 
-            case R.id.submitbtn:
-                view.startAnimation(AnimationUtils.loadAnimation(GenerateBillActivity.this, R.anim.button_click));
+            case R.id.btnsubmit:
+                view.startAnimation(AnimationUtils.loadAnimation(UpdateBillActivity.this, R.anim.button_click));
                 validationData();
                 break;
 
-            case R.id.edt_date:
+            case R.id.edt_date1:
                 datePickerDialog.show();
                 break;
 
-            case R.id.camerabtn:
-                view.startAnimation(AnimationUtils.loadAnimation(GenerateBillActivity.this, R.anim.button_click));
+            case R.id.btncamera:
+                cameraClick = true;
+                view.startAnimation(AnimationUtils.loadAnimation(UpdateBillActivity.this, R.anim.button_click));
                 Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                file = createFileInternalImage(String.valueOf(new Date().getDate() + "" + new Date().getTime()) + ".png");
+                File file = createFileInternalImage(String.valueOf(new Date().getDate() + "" + new Date().getTime()) + ".png");
                 outputFileUri = Uri.fromFile(file);
                 if (file != null) {
                     photoCaptureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
@@ -272,8 +294,8 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
                 startActivityForResult(photoCaptureIntent, requestCode);
                 break;
 
-            case R.id.imageView:
-                showImageDialog(outputFileUri);
+            case R.id.imgupdate:
+                showImageDialog(outputFileUri, imageurl);
                 break;
 
 
@@ -287,6 +309,7 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
             try {
                 Picasso.with(this)
                         .load(outputFileUri)
+                        .priority(HIGH)
                         .memoryPolicy(MemoryPolicy.NO_CACHE)
                         .networkPolicy(NetworkPolicy.NO_CACHE)
                         .error(R.mipmap.ic_launcher)
@@ -295,6 +318,7 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
     }
 
@@ -302,7 +326,7 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
 
         File file = null;
         try {
-            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), strFileName);
+            file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), strFileName);
             file.getParentFile().mkdirs();
         } catch (Exception e) {
             e.printStackTrace();
@@ -311,24 +335,40 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
         return file;
     }
 
-    private void showImageDialog(Uri uri) {
+    private void showImageDialog(Uri uri, String url) {
 
-        final Dialog dialog = new Dialog(GenerateBillActivity.this);
+        final Dialog dialog = new Dialog(UpdateBillActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.imagedialog_layout);
         ImageView img = (ImageView) dialog.findViewById(R.id.img);
         Button btnclose = (Button) dialog.findViewById(R.id.image_close);
 
-        try {
-            Picasso.with(this)
-                    .load(uri)
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .error(R.mipmap.ic_launcher)
-                    .noFade()
-                    .into(img);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (cameraClick) {
+            try {
+                Picasso.with(this)
+                        .load(uri)
+                        .priority(HIGH)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .error(R.mipmap.ic_launcher)
+                        .noFade()
+                        .into(img);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                Picasso.with(this)
+                        .load(url)
+                        .priority(HIGH)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .error(R.mipmap.ic_launcher)
+                        .noFade()
+                        .into(img);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         dialog.show();
@@ -397,6 +437,15 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
             return;
         }
 
+        if (TextUtils.isEmpty(edtrepaid_amount.getText().toString())) {
+            edtrepaid_amount.setError("This field is required");
+            focusView = edtrepaid_amount;
+            focusView.requestFocus();
+            edtrepaid_amount.setFocusable(true);
+            edtrepaid_amount.requestFocusFromTouch();
+            return;
+        }
+
         if (TextUtils.isEmpty(remainamount.getText().toString())) {
             remainamount.setError("This field is required");
             focusView = remainamount;
@@ -417,8 +466,9 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
                 e.printStackTrace();
             }
         } else {
-            cd.displayMessage("Please Capture Bill Image");
+            cd.displayMessage("Please Capture UpdateBill Image");
         }
+
     }
 
     public void uploadImage() {
@@ -501,169 +551,86 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
         }
     }
 
-    public void uploadData(String imagepath) {
+    public void uploadData(final String imagepath) {
         try {
             if (cd.isConnectingToInternet()) {
 
-                JSONObject jsonObjectGenerateBill = null;
+                JSONObject jsonObjectUpdateBill = null;
 
                 try {
-                    jsonObjectGenerateBill = new JSONObject();
+                    jsonObjectUpdateBill = new JSONObject();
 
-                    Date mydate = Utils.simpleFormatDate.parse(currentdate);
-                    String strCreateDate = Utils.readFormat.format(mydate);
+                    Date mydate = new Date();
+                    strUpdatedDate = Utils.readFormat.format(mydate);
 
-                    jsonObjectGenerateBill.put("customer_name", customer);
-                    jsonObjectGenerateBill.put("bill_number", billnum);
-                    jsonObjectGenerateBill.put("date", currentdate);
-                    jsonObjectGenerateBill.put("created_date", strCreateDate);
-                    jsonObjectGenerateBill.put("total_amount", strtotalamt);
-                    jsonObjectGenerateBill.put("paid_amount", strpaidamt);
-                    jsonObjectGenerateBill.put("updated_date", "");
-                    jsonObjectGenerateBill.put("remaining_amount", strremainamt);
-                    jsonObjectGenerateBill.put("image_url", imagepath);
+                    jsonObjectUpdateBill.put("customer_name", customer);
+                    jsonObjectUpdateBill.put("bill_number", billnum);
+                    jsonObjectUpdateBill.put("date", currentdate);
+                    jsonObjectUpdateBill.put("created_date", billReportModel.getCreated_date());
+                    jsonObjectUpdateBill.put("total_amount", strtotalamt);
+                    jsonObjectUpdateBill.put("paid_amount", strpaidamt);
+                    jsonObjectUpdateBill.put("updated_date", strUpdatedDate);
+                    jsonObjectUpdateBill.put("remaining_amount", strremainamt);
+                    jsonObjectUpdateBill.put("image_url", imagepath);
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                storageService.insertDocs(Config.collectionGenerateBill, jsonObjectGenerateBill,
-                        new AsyncApp42ServiceApi.App42StorageServiceListener() {
-
+                storageService.updateDocs(jsonObjectUpdateBill, billReportModel.getDoc_id(), Config.collectionGenerateBill,
+                        new App42CallBack() {
                             @Override
-                            public void onDocumentInserted(Storage response) {
+                            public void onSuccess(Object o) {
                                 try {
-                                    if (mProgressDialog.isShowing())
-                                        mProgressDialog.dismiss();
-                                    if (response.isResponseSuccess()) {
+                                    if (o != null) {
 
-                                        if (response.getJsonDocList().size() > 0) {
-
-                                            Storage.JSONDocument jsonDocument = response.getJsonDocList().get(0);
-
-                                            JSONObject jsonObject = new JSONObject(response.getJsonDocList().get(0).getJsonDoc());
-
-                                            try {
-                                                if (jsonObject != null) {
-                                                    if (jsonObject.getString("total_amount") != null &&
-                                                            !jsonObject.getString("total_amount").equalsIgnoreCase("")) {
-                                                        total_amount = jsonObject.optString("total_amount");
-                                                    } else {
-                                                        total_amount = "";
-                                                    }
-
-                                                    if (jsonObject.getString("created_date") != null &&
-                                                            !jsonObject.getString("created_date").equalsIgnoreCase("")) {
-                                                        created_date = jsonObject.optString("created_date");
-                                                    } else {
-                                                        created_date = "";
-                                                    }
-
-                                                    if (jsonObject.getString("customer_name") != null &&
-                                                            !jsonObject.getString("customer_name").equalsIgnoreCase("")) {
-                                                        customer_name = jsonObject.optString("customer_name");
-                                                    } else {
-                                                        customer_name = "";
-                                                    }
-
-                                                    if (jsonObject.getString("date") != null &&
-                                                            !jsonObject.getString("date").equalsIgnoreCase("")) {
-                                                        strdate = jsonObject.optString("date");
-                                                    } else {
-                                                        strdate = "";
-                                                    }
-
-                                                    if (jsonObject.getString("remaining_amount") != null &&
-                                                            !jsonObject.getString("remaining_amount").equalsIgnoreCase("")) {
-                                                        remaining_amount = jsonObject.optString("remaining_amount");
-                                                    } else {
-                                                        remaining_amount = "";
-                                                    }
-
-                                                    if (jsonObject.getString("updated_date") != null &&
-                                                            !jsonObject.getString("updated_date").equalsIgnoreCase("")) {
-                                                        updated_date = jsonObject.optString("updated_date");
-                                                    } else {
-                                                        updated_date = "";
-                                                    }
-
-                                                    if (jsonObject.getString("bill_number") != null &&
-                                                            !jsonObject.getString("bill_number").equalsIgnoreCase("")) {
-                                                        bill_number = jsonObject.optString("bill_number");
-                                                    } else {
-                                                        bill_number = "";
-                                                    }
-
-                                                    if (jsonObject.getString("image_url") != null &&
-                                                            !jsonObject.getString("image_url").equalsIgnoreCase("")) {
-                                                        image_url = jsonObject.optString("image_url");
-                                                    } else {
-                                                        image_url = "";
-                                                    }
-
-                                                    if (jsonObject.getString("paid_amount") != null &&
-                                                            !jsonObject.getString("paid_amount").equalsIgnoreCase("")) {
-                                                        paid_amount = jsonObject.optString("paid_amount");
-                                                    } else {
-                                                        paid_amount = "";
-                                                    }
-                                                    if (total_amount.equals(paid_amount)) {
-                                                        strstatus = "P";
-                                                    } else {
-                                                        strstatus = "R";
-                                                    }
-                                                }
-
-
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-
-                                            String selection = "object_id = ?";
-                                            // WHERE clause arguments
-                                            String[] selectionArgs = {jsonDocument.getDocId()};
-                                            //total_amount,created_date,customer_name,strdate,remaining_amount,updated_date,bill_number,image_url,paid_amount
-
-                                            String valuesArray[] = {jsonDocument.getDocId(),
-                                                    customer_name, bill_number, strdate, total_amount, paid_amount, remaining_amount,
-                                                    image_url, created_date, updated_date,
-                                                    Config.collectionGenerateBill, strstatus};
-                                            boolean output = BillingRecovery.dbCon.updateBulk(DbHelper.TABLE_GENERATE_BILL, selection, valuesArray, utils.columnNamesGenerateBill, selectionArgs);
-                                            cd.displayMessage("Data Upload Successfully!!");
-
-                                            if (output) {
-                                                Intent i = new Intent(GenerateBillActivity.this, DashboardActivity.class);
-                                                startActivity(i);
-                                                finish();
-                                            }
+                                        if (strtotalamt.equals(strpaidamt)) {
+                                            strstatus = "P";
+                                        } else {
+                                            strstatus = "R";
                                         }
 
+                                        String selection = "object_id = ?";
+                                        // WHERE clause arguments
+                                        String[] selectionArgs = {billReportModel.getDoc_id()};
+                                        //total_amount,created_date,customer_name,strdate,remaining_amount,updated_date,bill_number,image_url,paid_amount
 
+                                        String valuesArray[] = {billReportModel.getDoc_id(),
+                                                customer, billnum, currentdate, strtotalamt, strpaidamt, strremainamt,
+                                                imagepath, billReportModel.getCreated_date(), strUpdatedDate,
+                                                Config.collectionGenerateBill, strstatus};
+                                        boolean output = BillingRecovery.dbCon.updateBulk(DbHelper.TABLE_GENERATE_BILL, selection, valuesArray, utils.columnNamesGenerateBill, selectionArgs);
+                                        cd.displayMessage("Update Data Succesfully!!");
+
+                                        if (output) {
+                                            Intent i = new Intent(UpdateBillActivity.this, DashboardActivity.class);
+                                            startActivity(i);
+                                            finish();
+                                        }
+                                       /* cd.displayMessage("Update Data Succesfully!!");
+                                        Intent update = new Intent(UpdateBillActivity.this, DashboardActivity.class);
+                                        startActivity(update);
+                                        finish();*/
                                     } else {
+                                        if (mProgressDialog.isShowing())
+                                            mProgressDialog.dismiss();
                                         cd.displayMessage("Please check your internet connection and try again!!");
                                     }
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    cd.displayMessage("Please check your internet connection and try again!!");
+                                } catch (Exception e1) {
+                                    cd.displayMessage("Something went wrong. Please try Again!!!");
+                                    if (mProgressDialog.isShowing())
+                                        mProgressDialog.dismiss();
+                                    e1.printStackTrace();
                                 }
                             }
 
                             @Override
-                            public void onUpdateDocSuccess(Storage response) {
-                            }
-
-                            @Override
-                            public void onFindDocSuccess(Storage response) {
-                            }
-
-                            @Override
-                            public void onInsertionFailed(App42Exception ex) {
+                            public void onException(Exception e) {
+                                if (mProgressDialog.isShowing())
+                                    mProgressDialog.dismiss();
                                 try {
-                                    if (mProgressDialog.isShowing())
-                                        mProgressDialog.dismiss();
-                                    if (ex != null) {
-                                        JSONObject jsonObject = new JSONObject(ex.getMessage());
+                                    if (e != null) {
+                                        JSONObject jsonObject = new JSONObject(e.getMessage());
                                         JSONObject jsonObjectError = jsonObject.
                                                 getJSONObject("app42Fault");
                                         String strMess = jsonObjectError.getString("details");
@@ -671,19 +638,10 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
                                     } else {
                                         cd.displayMessage("Please check your internet connection and try again!!");
                                     }
-
                                 } catch (JSONException e1) {
                                     e1.printStackTrace();
-                                    cd.displayMessage("Something went wrong. Try Again!!");
+                                    cd.displayMessage("Something went wrong. Please try Again!!!");
                                 }
-                            }
-
-                            @Override
-                            public void onFindDocFailed(App42Exception ex) {
-                            }
-
-                            @Override
-                            public void onUpdateDocFailed(App42Exception ex) {
                             }
                         });
 
@@ -696,5 +654,4 @@ public class GenerateBillActivity extends Activity implements View.OnClickListen
             e.printStackTrace();
         }
     }
-
 }
